@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app xmlns:web="http://xmlns.jcp.org/xml/ns/javaee">
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>
+            /WEB-INF/ad-servlet.xml
+        </param-value>
+  </context-param>
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <servlet>
+    <servlet-name>ad</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ad</servlet-name>
+    <url-pattern>/api/*</url-pattern>
+  </servlet-mapping>
+  <!-- 
+   <servlet-mapping>
+ 	<servlet-name>ad</servlet-name>
+        <url-pattern>*.htm</url-pattern>
+  </servlet-mapping>
+   -->
+</web-app>

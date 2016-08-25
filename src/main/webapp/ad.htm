@@ -1,0 +1,118 @@
+<html>
+<head>
+<title>jQuery Hello World</title>
+ 
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.js"></script>
+ <style>
+		label {
+			float: left;
+			width: 100px;
+		}
+		textarea{
+			width: 200px;
+			height: 150px;
+		}
+		input {
+		width: 150px;
+		}
+</style>		
+</head>
+ 
+<body>
+ 
+<script type="text/javascript">
+ 
+$(document).ready(function(){
+	$("#submit-btn").click(function() {
+	
+		$.ajax({
+			url: './api/ad',
+			contentType: 'application/json',
+			data: '  { \"partner_id\": \"'+$("input[name='partner_id']").val()+'\"'+
+			' ,  \"duration\": \"'+$("input[name='duration']").val()+'\"'+
+			' ,  \"content\": \"'+$("textarea[name='content']").val()+'\"'+
+				'}',
+			type: 'post'
+			}).done(function() {
+				
+				
+			}).error( function(jqXHR, textStatus, errorThrown ){
+				alert(errorThrown);
+			});
+	});
+});
+
+$(document).ready(function(){
+	$("#find-btn").click(function() {
+	
+		$.ajax({
+			url: './api/ad?partner_id='+$("input[name='partner_id']").val(),
+			contentType: 'application/json',
+			type: 'GET',
+    		success: function(result) {
+    			var content = '<table><TH><TD>partner Id</TD><TD>duration</TD><TD>content</TD></TH>';
+    			$(result).each(function(index, partner) {
+    				content+="<TR><TD>"+partner.partner_id+"</TD>"+
+    				"<TD>"+partner.duration+"</TD>"+
+    				"<TD>"+partner.content+"</TD>"+
+    				"</TR>";
+    				
+    				/*
+    				li += '<li class="api-name"><a href="#' + api.api_name + '">' +
+    						'<i class="icon-chevron-right"></i><i class="icon-chevron-down"></i> ' + api.api_name + '</a>' +
+    						'<ul class="nav api-urls">';
+
+    				$(api.supported_urls).each(function(i, url) {
+    					li += '<li><a data-id="' + url.id + '">' + url.supported_http_method + ' ' + url.url + '</a></li>'
+    				});
+
+    				li += '</ul></li>'
+    				*/
+    			});
+    			content+='</table>'
+    			$('.docs-content').html(content);
+    			
+
+    		}
+			}).error( function(jqXHR, textStatus, errorThrown ){
+				alert(errorThrown);
+			});
+	});
+});
+
+
+
+
+</script>
+ 
+
+ 
+<div id="msgid">
+</div>
+<table>
+
+<tr>
+<td >partner Id:</td>
+<td width="200px"><input id="partner_id" name="partner_id" type="text" value="" width="200px"></td>
+</tr>
+<tr>
+<td >duration:</td>
+<td width="200px"><input id="duration" name="duration" type="text" value="" width="200px"></td>
+</tr>
+<tr>
+<td>content:</td>
+<td><textarea name="content" id="content" >
+</textarea> </td>
+
+</tr>
+<tr> <td/><td/> </tr>
+<tr> <td><input type="button" id="submit-btn" value="create"></td> <td><input type="button" id="find-btn" value="find"></td> </tr>
+</table>
+  	
+ 
+<div class="docs-content">
+
+		</div>
+ 
+</body>
+</html>
